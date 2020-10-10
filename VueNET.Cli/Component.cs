@@ -42,10 +42,7 @@ namespace VueNET.Cli
                 var folder = Path.GetDirectoryName(file);
                 var newfolder = folder.Replace(Identifiers.Namespace, Namespace).Replace(Identifiers.Entity, Name);
 
-                if (!Directory.Exists(newfolder))
-                {
-                    Directory.CreateDirectory(newfolder);
-                }
+                IOHelper.CreateFolderIfNotExist(newfolder);
 
                 IOHelper.CopyFolder(folder, newfolder, true);
             }
@@ -63,11 +60,7 @@ namespace VueNET.Cli
             foreach (var file in files)
             {
                 var directory = Path.GetDirectoryName(file);
-
-                if (Directory.Exists(directory))
-                {
-                    IOHelper.RemoveFolder(directory);
-                }
+                IOHelper.RemoveFolderIfExist(directory);
             }
         }
 

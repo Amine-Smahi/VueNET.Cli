@@ -44,6 +44,22 @@ namespace VueNET.Cli
             File.WriteAllText(filepath, File.ReadAllText(filepath).Replace(oldword, newword));
         }
 
+        public static void CreateFolderIfNotExist(string folder)
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+        }
+
+        public static void RemoveFolderIfExist(string folder)
+        {
+            if (!Directory.Exists(folder))
+            {
+                RemoveFolder(folder);
+            }
+        }
+
         public static void CopyFolder(string sourceDirName, string destDirName, bool copySubDirs)
         {
 
