@@ -10,8 +10,8 @@ namespace VueNET.Cli
             {
                 TemplatePath = @".\template",
                 TempFolder = @".\temp",
-                Name = "Amine",
-                Namespace = "Test",
+                Name = "MyComponent",
+                Namespace = "MyApp",
                 Properties = new List<Property>
                 {
                     new Property
@@ -29,7 +29,7 @@ namespace VueNET.Cli
                     }
                 }
             };
-            component.CreateForProject(@"C:\Users\moham\source\repos\VueNET.Cli\VueNET.Cli\test");
+            component.CreateForProject(@".\result");
         }
     }
 }

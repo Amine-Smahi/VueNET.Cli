@@ -52,14 +52,6 @@ namespace VueNET.Cli
             }
         }
 
-        public static void RemoveFolderIfExist(string folder)
-        {
-            if (!Directory.Exists(folder))
-            {
-                RemoveFolder(folder);
-            }
-        }
-
         public static void CopyFolder(string sourceDirName, string destDirName, bool copySubDirs)
         {
 
@@ -92,6 +84,14 @@ namespace VueNET.Cli
                     string tempPath = Path.Combine(destDirName, subdir.Name);
                     CopyFolder(subdir.FullName, tempPath, copySubDirs);
                 }
+            }
+        }
+
+        public static void RemoveFile(string file)
+        {
+            if (File.Exists(file))
+            {
+                File.Delete(file);
             }
         }
 

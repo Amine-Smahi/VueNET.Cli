@@ -59,8 +59,7 @@ namespace VueNET.Cli
         {
             foreach (var file in files)
             {
-                var directory = Path.GetDirectoryName(file);
-                IOHelper.RemoveFolderIfExist(directory);
+                IOHelper.RemoveFile(file);
             }
         }
 
