@@ -6,22 +6,23 @@ namespace VueNET.Cli
 {
     public class Component
     {
-        public string TemplatePath { get; set; }
-        public string TempFolder { get; set; }
         public string Name { get; set; }
         public string Namespace { get; set; }
-        public List<Property> Properties { get; set; }
+        public string OutputProjectLocation { get; set; }
+        public List<Property> Properties { get; set; } = new List<Property>();
 
-        public void CreateForProject(string OutPutProjectPath)
+        public void CreateForProject()
         {
-            IOHelper.CopyFolder(TemplatePath, TempFolder, true);
-            var files = IOHelper.GetFilesInFolder(TempFolder);
+            string templatePath = @".\template";
+            string tempFolder = @".\temp";
+            IOHelper.CopyFolder(templatePath, tempFolder, true);
+            var files = IOHelper.GetFilesInFolder(tempFolder);
             UpdateCode(files, Name, Namespace);
-            MoveFilesAndFolders(files);
-            files = IOHelper.GetFilesInFolder(TempFolder);
+            MoveFilesAndFolders(files, tempFolder);
+            files = IOHelper.GetFilesInFolder(tempFolder);
             UpdateFilesName(files);
-            IOHelper.CopyFolder(TempFolder, OutPutProjectPath, true);
-            IOHelper.RemoveFolder(TempFolder);
+            IOHelper.CopyFolder(tempFolder, OutputProjectLocation, true);
+            IOHelper.RemoveFolder(tempFolder);
         }
 
         private void UpdateFilesName(List<string> files)
@@ -33,7 +34,7 @@ namespace VueNET.Cli
             }
         }
 
-        private void MoveFilesAndFolders(List<string> files)
+        private void MoveFilesAndFolders(List<string> files, string tempfolder)
         {
             files = SortFilesListByTreeDepth(files);
 
@@ -47,7 +48,7 @@ namespace VueNET.Cli
                 IOHelper.CopyFolder(folder, newfolder, true);
             }
             RemoveOldFiles(files);
-            RemoveOldFolders(TempFolder);
+            RemoveOldFolders(tempfolder);
         }
 
         private void RemoveOldFolders(string tempFolder)
@@ -86,8 +87,7 @@ namespace VueNET.Cli
         private void UpdateProperties(string file, List<Property> properties)
         {
             WriteAllProperties(file, properties);
-            WriteSortByProperty(file, properties.Where(x => x.IsForSorting == true)
-                .FirstOrDefault().Name);
+            WriteSortByProperty(file, properties.Where(x => x.IsForSorting == true).FirstOrDefault().Name);
         }
 
         private void WriteAllProperties(string file, List<Property> properties)
