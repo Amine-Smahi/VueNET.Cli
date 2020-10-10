@@ -5,22 +5,6 @@ namespace VueNET.Cli
 {
     public static class IOHelper
     {
-        public static void RemoveFolder(string folderpath)
-        {
-            Directory.Delete(folderpath, true);
-        }
-
-        public static void RenameFile(string filepath, string newName)
-        {
-            var folder = Path.GetDirectoryName(filepath);
-            var newpath = Path.Combine(folder, newName);
-            if (File.Exists(newpath))
-            {
-                File.Delete(newpath);
-            }
-            File.Move(filepath, newpath);
-        }
-
         public static List<string> GetFilesInFolder(string folderpath)
         {
             List<string> files = new List<string>();
@@ -35,7 +19,32 @@ namespace VueNET.Cli
             return files;
         }
 
-        public static void CopyDirectory(string sourceDirName, string destDirName, bool copySubDirs)
+        public static void RenameFile(string filepath, string newName)
+        {
+            var folder = Path.GetDirectoryName(filepath);
+            var newpath = Path.Combine(folder, newName);
+            if (File.Exists(newpath))
+            {
+                File.Delete(newpath);
+            }
+            File.Move(filepath, newpath);
+        }
+
+        public static bool FileContainWord(string file, string word)
+        {
+            if (File.ReadAllText(file).Contains(word))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void ReplaceWord(string filepath, string oldword, string newword)
+        {
+            File.WriteAllText(filepath, File.ReadAllText(filepath).Replace(oldword, newword));
+        }
+
+        public static void CopyFolder(string sourceDirName, string destDirName, bool copySubDirs)
         {
 
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
@@ -65,30 +74,21 @@ namespace VueNET.Cli
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string tempPath = Path.Combine(destDirName, subdir.Name);
-                    CopyDirectory(subdir.FullName, tempPath, copySubDirs);
+                    CopyFolder(subdir.FullName, tempPath, copySubDirs);
                 }
             }
         }
 
-        public static bool FileContainWord(string file, string word)
+        public static void RemoveFolder(string folderpath)
         {
-            if (File.ReadAllText(file).Contains(word))
-            {
-                return true;
-            }
-            return false;
+            Directory.Delete(folderpath, true);
         }
 
-        public static void ReplaceWord(string filepath, string oldword, string newword)
-        {
-            File.WriteAllText(filepath, File.ReadAllText(filepath).Replace(oldword, newword));
-        }
-
-        public static void RemoveEmptyDirectories(string startLocation)
+        public static void RemoveEmptyFolders(string startLocation)
         {
             foreach (var directory in Directory.GetDirectories(startLocation))
             {
-                RemoveEmptyDirectories(directory);
+                RemoveEmptyFolders(directory);
                 if (Directory.GetFiles(directory).Length == 0 &&
                     Directory.GetDirectories(directory).Length == 0)
                 {
