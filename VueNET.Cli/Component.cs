@@ -14,13 +14,13 @@ namespace VueNET.Cli
 
         public void CreateForProject(string OutPutProjectPath)
         {
-            IOHelper.CopyDirectory(TemplatePath, TempFolder, true);
+            IOHelper.CopyFolder(TemplatePath, TempFolder, true);
             var files = IOHelper.GetFilesInFolder(TempFolder);
             UpdateCode(files, Name, Namespace);
             MoveFilesAndFolders(files);
             files = IOHelper.GetFilesInFolder(TempFolder);
             UpdateFilesName(files);
-            IOHelper.CopyDirectory(TempFolder, OutPutProjectPath, true);
+            IOHelper.CopyFolder(TempFolder, OutPutProjectPath, true);
             IOHelper.RemoveFolder(TempFolder);
         }
 
@@ -47,7 +47,7 @@ namespace VueNET.Cli
                     Directory.CreateDirectory(newfolder);
                 }
 
-                IOHelper.CopyDirectory(folder, newfolder, true);
+                IOHelper.CopyFolder(folder, newfolder, true);
             }
             RemoveOldFiles(files);
             RemoveOldFolders(TempFolder);
@@ -55,7 +55,7 @@ namespace VueNET.Cli
 
         private void RemoveOldFolders(string tempFolder)
         {
-            IOHelper.RemoveEmptyDirectories(tempFolder);
+            IOHelper.RemoveEmptyFolders(tempFolder);
         }
 
         private void RemoveOldFiles(List<string> files)
