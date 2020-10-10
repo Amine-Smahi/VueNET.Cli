@@ -109,8 +109,7 @@ namespace VueNET.Cli
 
         private List<string> SortFilesListByTreeDepth(List<string> list)
         {
-            return list.OrderBy(f => f.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Length)
-                .ToList();
+            return list.OrderBy(f => f.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Length).ToList();
         }
     }
 }
