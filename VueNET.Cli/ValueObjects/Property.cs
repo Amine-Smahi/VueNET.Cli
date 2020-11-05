@@ -1,10 +1,9 @@
-﻿namespace VueNET.Cli
+﻿namespace VueNET.Cli.ValueObjects
 {
     public class Property
     {
         public string Type { get; set; }
         public string Name { get; set; }
-        public bool IsForSorting { get; set; }
 
         public string GetDeclaration()
         {

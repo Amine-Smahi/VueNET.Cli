@@ -10,6 +10,15 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	 </Content>
      <Compile Remove="template\**" />
+     <Content Remove="template\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="template\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="template\**" />
     </ItemGroup>
 
 </Project>
